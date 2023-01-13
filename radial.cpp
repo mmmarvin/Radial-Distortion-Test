@@ -80,7 +80,7 @@ int main()
   sf::RenderWindow renderWindow(sf::VideoMode(800, 600), "Distorted Image");
 
   sf::Image image;
-  image.loadFromFile("image.jpg");
+  image.loadFromFile("vincent.jpg");
 
   auto distorted_image = distort(image);
   texture.loadFromImage(distorted_image);
