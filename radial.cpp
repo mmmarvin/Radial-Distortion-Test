@@ -40,10 +40,16 @@ sf::Image distort(const sf::Image& in)
     {
       // formula for distortion:
       // https://cgcooke.github.io/Blog/optimisation/computer%20vision/2020/04/05/Inverse-Radial-Distortion.pynb.html
-      // x_d = x * (1 + (k_1 * r) + (k_2 * r^2) + (k_3 * r^3));
-      // y_d = y * (1 + (k_1 * r) + (k_2 * r^2) + (k_3 * r^3));
+      // x_d = x * (1 + (k_1 * r) + (k_2 * r^2) + (k_3 * r^3))
+      // y_d = y * (1 + (k_1 * r) + (k_2 * r^2) + (k_3 * r^3))
+      // 
+      // solving for x and y, we have:
+      // x = x_d / (1 + (k_1 * r) + (k_2 * r^2) + (k_3 * r^3))
+      // y = y_d / (1 + (k_1 * r) + (k_2 * r^2) + (k_3 * r^3))
       auto p = sf::Vector2f(x, y);
 
+      // The formula requires that the image is from [-1, 1] in both the x-y coordinates, where the center is at (0, 0), so
+      // we map the coordinates to [-0.5, 0.5]
       sf::Transform m1(1.f / float(x_size), 0.f,                  -(center.x / float(x_size)),
                        0.f,                 1.f / float(y_size),  -(center.y / float(y_size)),
                        0.f,                 0.f,                   1.f);
